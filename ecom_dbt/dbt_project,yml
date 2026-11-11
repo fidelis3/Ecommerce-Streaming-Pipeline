@@ -1,0 +1,14 @@
+name: 'ecom_dbt'
+version: '1.0.0'
+profile: 'ecom_dbt'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  ecom_dbt:
+    staging:
+      +schema: STAGING
+      +materialized: view

@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Order events, parsed from JSON and deduplicated on event_id."
+    columns:
+      - name: event_id
+        data_tests: [unique, not_null]
+      - name: event_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['order_placed', 'order_shipped', 'order_cancelled']
+      - name: order_id
+        data_tests: [not_null]
+      - name: customer_id
+        description: "~2% are null by design (messy producer data)."
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+
+  - name: stg_payments
+    description: "Payment events, parsed from JSON and deduplicated on event_id."
+    columns:
+      - name: event_id
+        data_tests: [unique, not_null]
+      - name: event_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['payment_succeeded', 'payment_failed']
+      - name: order_id
+        data_tests: [not_null]
+      - name: amount
+        description: "~2% are null by design (messy producer data)."
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+
+  - name: stg_customers
+    description: "Customer events, parsed from JSON and deduplicated on event_id."
+    columns:
+      - name: event_id
+        data_tests: [unique, not_null]
+      - name: event_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['customer_created', 'customer_updated']
+      - name: customer_id
+        data_tests: [not_null]

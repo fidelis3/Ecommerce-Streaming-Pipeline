@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    database: ECOM
+    schema: RAW
+    description: "Events landed untouched from Kafka by consumer.py"
+    tables:
+      - name: orders_raw
+      - name: payments_raw
+      - name: customers_raw

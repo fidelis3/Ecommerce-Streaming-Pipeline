@@ -1,0 +1,14 @@
+# Credentials come from environment variables, so nothing secret lives in this file.
+ecom_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER', 'ECOM_USER') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+      role: ECOM_ROLE
+      warehouse: ECOM_WH
+      database: ECOM
+      schema: ANALYTICS
+      threads: 4
