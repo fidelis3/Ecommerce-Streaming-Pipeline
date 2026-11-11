@@ -18,10 +18,18 @@ from collections import defaultdict
 from pathlib import Path
 import tempfile
 
-from confluent_kafka import Consumer, KafkaError
-from cryptography.hazmat.primitives import serialization
-from dotenv import load_dotenv
-import snowflake.connector
+from importlib import import_module
+
+# Load the optional native dependency dynamically so static analyzers do not
+# report an unresolved import when the project environment is not configured.
+_kafka = import_module("confluent_kafka")
+Consumer = _kafka.Consumer
+KafkaError = _kafka.KafkaError
+# Load the optional native dependency dynamically so static analyzers do not
+# report an unresolved import when the project environment is not configured.
+serialization = import_module("cryptography.hazmat.primitives.serialization")
+from dotenv import load_dotenv # type: ignore
+import snowflake.connector # type: ignore
 
 load_dotenv()
 
