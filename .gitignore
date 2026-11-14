@@ -1,5 +1,9 @@
 .venv/
+.venv-dbt/
 __pycache__/
 .env
 *.p8
 *.pem
+ecom_dbt/target/
+ecom_dbt/dbt_packages/
+ecom_dbt/logs/
